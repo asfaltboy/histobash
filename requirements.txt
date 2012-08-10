@@ -1,5 +1,4 @@
 django==1.4.1
-django-grappelli==2.4.0
 django-tastypie==0.9.11
 django-tastypie-mongoengine==0.2.1
 django-extensions==0.9

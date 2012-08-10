@@ -1,4 +1,5 @@
 import os
+from mongoengine import connect
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,8 +13,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-from mongoengine import connect
-connect('histobash')
+host = "mongodb://root:pass@hatch.mongohq.com:10034/app003132345"
+connect('histobash', host=os.environ["MONGOHQ_URL"])
 
 TIME_ZONE = 'Etc/UTC'
 LANGUAGE_CODE = 'en-us'
