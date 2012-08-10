@@ -1,5 +1,4 @@
 import os
-from mongoengine import connect
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,9 +11,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-host = "mongodb://root:pass@hatch.mongohq.com:10034/app003132345"
-connect('histobash', host=os.environ["MONGOHQ_URL"])
 
 TIME_ZONE = 'Etc/UTC'
 LANGUAGE_CODE = 'en-us'
@@ -78,7 +74,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # External
-    'grappelli',
     'tastypie',
     'tastypie_mongoengine',
     'django_extensions',
@@ -108,10 +103,7 @@ LOGGING = {
     }
 }
 
-# App specific
-GRAPPELLI_ADMIN_TITLE = PROJECT_NAME
+from mongoengine import connect
 
-MONGO_DATABASE_NAME = 'database'
-
-import mongoengine
-mongoengine.connect(MONGO_DATABASE_NAME)
+host = "mongodb://root:pass@hatch.mongohq.com:10034/app003132345"
+connect('histobash', host=os.environ["MONGOHQ_URL"])

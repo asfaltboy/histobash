@@ -5,7 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # administration
-    url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
     # api
