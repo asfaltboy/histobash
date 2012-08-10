@@ -12,17 +12,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'histob',
-#         'USER': 'histob',
-#         'PASSWORD': 'histob',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
-
 from mongoengine import connect
 connect('histobash')
 
