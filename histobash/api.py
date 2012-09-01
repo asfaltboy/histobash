@@ -1,31 +1,43 @@
 from tastypie import authorization
-from tastypie_mongoengine import resources
-from test_app import documents
+from tastypie_mongoengine import resources, fields
+from mongoengine.django.auth import User
+
+from histobash.models import Command
 
 
-# fields: email, password, social-auth
-
-class PersonResource(resources.MongoEngineResource):
+class UserResource(resources.MongoEngineResource):
     class Meta:
-        queryset = documents.Person.objects.all()
+        queryset = User.objects.all()
         allowed_methods = ('get', 'post', 'put', 'delete')
         authorization = authorization.Authorization()
+        filtering = {
+            "username": ('exact', ),
+            "email": ('exact', ),
+        }
 
 
-class EmbeddedPersonResource(resources.MongoEngineResource):
-    class Meta:
-        object_class = documents.EmbeddedPerson
+# class EmbeddedUserResource(resources.MongoEngineResource):
+#     class Meta:
+#         object_class = EmbeddedPerson
 
 
 # fields: number, command, comment, subject
 
 class CommandResource(resources.MongoEngineResource):
     class Meta:
-        queryset = documents.Commands.objects.all()
+        queryset = Command.objects.all()
         allowed_methods = ('get', 'post', 'put', 'delete')
         authorization = authorization.Authorization()
 
+        filtering = {
+            "subject": ('exact', ),
+            "email": ('exact', ),
+        }
 
-class EmbeddedCommandResource(resources.MongoEngineResource):
-    class Meta:
-        object_class = documents.EmbeddedPerson
+    author = fields.ReferenceField(to=UserResource, attribute='author',
+                                    full=False)
+
+
+# class EmbeddedCommandResource(resources.MongoEngineResource):
+#     class Meta:
+#         object_class = EmbeddedPerson

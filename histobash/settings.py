@@ -1,13 +1,13 @@
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 PROJECT_NAME = os.path.split(PROJECT_ROOT)[1]
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Pasha S', 'pasha.savchenko@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -61,6 +61,7 @@ ROOT_URLCONF = 'histobash.urls'
 WSGI_APPLICATION = 'histobash.wsgi.application'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_ROOT, 'templates')
 )
 
 INSTALLED_APPS = (
@@ -105,5 +106,7 @@ LOGGING = {
 
 from mongoengine import connect
 
-host = "mongodb://root:pass@hatch.mongohq.com:10034/app003132345"
-connect('histobash', host=os.environ["MONGOHQ_URL"])
+default_host = "localhost"
+mdb = connect('histobash', host=os.environ.get("MONGOHQ_URL", default_host))
+
+SOCIAL_AUTH_MODELS = 'social_auth.db.mongoengine_models'
