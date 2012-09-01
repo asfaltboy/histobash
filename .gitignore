@@ -1,7 +1,6 @@
 venv
 /histobash/host_settings.py
 /histobash/.ropeproject
-/histobash/client
 /host_settings.py
 *.py[co]
 
