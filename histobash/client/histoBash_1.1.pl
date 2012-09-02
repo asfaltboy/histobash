@@ -3,9 +3,9 @@ use DBI;
 
 
 # Database Setting ###############################
-$host = 'roypadina.sytes.net';                   #
+$host = 'localhost';                   #
 $user = 'root';					                   #
-$password = 'Xrcd2499!';			                #
+$password = 'pass';			                #
 $port = '3306';					                   #
 # END Of Databse Settings ########################
 
