@@ -1,15 +1,17 @@
-from tastypie import authorization
+from tastypie.authorization import Authorization
 from tastypie_mongoengine import resources, fields
 from mongoengine.django.auth import User
 
 from histobash.models import Command
+from histobash.authentication import ApiKeyAuthentication
 
 
 class UserResource(resources.MongoEngineResource):
     class Meta:
         queryset = User.objects.all()
         allowed_methods = ('get', 'post', 'put', 'delete')
-        authorization = authorization.Authorization()
+        authentication = ApiKeyAuthentication
+        authorization = Authorization()
         filtering = {
             "username": ('exact', ),
             "email": ('exact', ),
@@ -27,7 +29,8 @@ class CommandResource(resources.MongoEngineResource):
     class Meta:
         queryset = Command.objects.all()
         allowed_methods = ('get', 'post', 'put', 'delete')
-        authorization = authorization.Authorization()
+        authentication = ApiKeyAuthentication
+        authorization = Authorization()
 
         filtering = {
             "subject": ('exact', ),

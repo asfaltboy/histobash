@@ -1,8 +1,13 @@
-from mongoengine import (DynamicDocument, StringField, ListField, DateTimeField, BooleanField,
-                    IntField, ReferenceField)
-
+from django.db.models import signals
+from mongoengine import (DynamicDocument, StringField,
+            ListField, DateTimeField, BooleanField,
+            IntField, ReferenceField, Document)
 from mongoengine.django.auth import User
+
+import uuid
+import hmac
 from datetime import datetime
+from hashlib import sha1
 
 
 class Command(DynamicDocument):
@@ -29,3 +34,34 @@ class Command(DynamicDocument):
         return super(Command, self).save(*args, **kwargs)
 
     # Define permalink get_absolute_url link to /command/<alias>_<12345abcdf>
+
+
+class ApiKey(Document):
+    user = ReferenceField(User)
+    key = StringField(max_length=255)
+    created = DateTimeField(default=datetime.datetime.now)
+
+    def __unicode__(self):
+        return u"%s for %s" % (self.key, self.user)
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = self.generate_key()
+
+        return super(ApiKey, self).save(*args, **kwargs)
+
+    def generate_key(self):
+        # Get a random UUID.
+        new_uuid = uuid.uuid4()
+        # Hmac that beast.
+        return hmac.new(str(new_uuid), digestmod=sha1).hexdigest()
+
+
+def create_api_key(sender, **kwargs):
+    """
+    A signal for hooking up automatic ``ApiKey`` creation.
+    """
+    if kwargs.get('created') is True:
+        ApiKey.objects.create(user=kwargs.get('instance'))
+
+signals.post_save.connect(create_api_key, sender=User)
