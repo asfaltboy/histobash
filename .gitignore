@@ -1,7 +1,3 @@
-venv
-/histobash/host_settings.py
-/histobash/.ropeproject
-/host_settings.py
 *.py[co]
 
 # Packages
