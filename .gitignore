@@ -1,7 +1,3 @@
-venv
-/histobash/host_settings.py
-/histobash/.ropeproject
-/host_settings.py
 *.py[co]
 
 # Packages
@@ -29,3 +25,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+/histobash/api-server/local_settings.py
